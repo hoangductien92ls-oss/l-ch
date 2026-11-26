@@ -1,0 +1,222 @@
+```
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Lịch Công Tác - Đại đội</title>
+    <style>
+        * { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif; }
+        body { background: #f5f7fa; color: #1a1a1a; padding-bottom: 80px; }
+        
+        /* === HEADER === */
+        .top-bar { background: linear-gradient(135deg, #0f2b5e, #1e5bc7); padding: 20px 16px; color: white; }
+        .top-bar h1 { font-size: 19px; font-weight: 600; }
+        .top-bar p { font-size: 13px; opacity: 0.85; margin-top: 4px; }
+        
+        /* === TAB === */
+        .tabs { display: flex; background: white; position: sticky; top: 0; z-index: 99; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+        .tab { flex: 1; padding: 13px 0; text-align: center; font-size: 14px; color: #666; border-bottom: 3px solid transparent; cursor: pointer; }
+        .tab.active { color: #1e5bc7; border-bottom-color: #1e5bc7; font-weight: 600; }
+        
+        /* === NỘI DUNG === */
+        .page { padding: 14px; display: none; }
+        .page.active { display: block; }
+        .month-title { text-align: center; font-size: 17px; font-weight: 600; color: #0f2b5e; margin: 10px 0 16px; }
+        
+        /* === THẺ SỰ KIỆN === */
+        .card { background: white; border-radius: 10px; padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 4px rgba(0,0,0,.06); border-left: 4px solid; }
+        .card.red  { border-left-color: #d32f2f; }
+        .card.green{ border-left-color: #2e7d32; }
+        .card.purple{ border-left-color: #7b1fa2; }
+        .card.amber{ border-left-color: #f57c00; }
+        .card.blue { border-left-color: #1976d2; }
+        
+        .date { font-size: 12px; color: #757575; margin-bottom: 4px; }
+        .title { font-size: 15px; font-weight: 600; color: #1a1a1a; margin-bottom: 4px; }
+        .time { font-size: 13px; color: #424242; }
+        .desc { font-size: 14px; color: #444; margin-top: 8px; line-height: 1.5; }
+        
+        /* === CHÚ THÍCH === */
+        .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; font-size: 12px; }
+        .legend span { display: flex; align-items: center; gap: 4px; }
+        .dot { width: 10px; height: 10px; border-radius: 2px; display: inline-block; }
+        
+        /* === CHÂN TRANG === */
+        .footer { position: fixed; bottom: 0; left: 0; right: 0; background: white; padding: 12px; text-align: center; font-size: 12px; color: #888; border-top: 1px solid #eee; }
+        
+        /* === NÚT LƯU ỨNG DỤNG === */
+        .install-bar { background: #e8f0fe; padding: 10px 14px; text-align: center; font-size: 13px; color: #1e5bc7; display: none; }
+        .install-bar.show { display: block; }
+    </style>
+</head>
+<body>
+
+<!-- NÚT HƯỚNG DẪN LƯU APP -->
+<div class="install-bar" id="installBanner" onclick="addToHomeScreen()">
+    📲 Nhấn đây → Lưu vào màn hình chính để dùng như ứng dụng
+</div>
+
+<!-- HEADER -->
+<div class="top-bar">
+    <h1>📅 LỊCH CÔNG TÁC ĐƠN VỊ</h1>
+    <p>Cập nhật: Tháng 12 năm 2026</p>
+</div>
+
+<!-- THANH TAB -->
+<div class="tabs">
+    <div class="tab active" onclick="switchTab('tuan')">Tuần này</div>
+    <div class="tab" onclick="switchTab('thang')">Tháng này</div>
+    <div class="tab" onclick="switchTab('thongbao')">Thông báo</div>
+</div>
+
+<!-- NỘI DUNG -->
+<div id="tuan" class="page active">
+    <div class="month-title">📌 LỊCH TUẦN NÀY</div>
+    
+    <div class="card red">
+        <div class="date">Thứ Hai — 30/11/2026</div>
+        <div class="title">Sáng: Chào cờ & Triển khai nhiệm vụ tuần</div>
+        <div class="time">⏰ 07:00 – 11:00</div>
+        <div class="desc">Chiều: Nghiên cứu, quán triệt nghị quyết cấp trên</div>
+    </div>
+    
+    <div class="card green">
+        <div class="date">Thứ Ba — 01/12/2026</div>
+        <div class="title">Toàn ngày: Huấn luyện chiến thuật</div>
+        <div class="time">⏰ 07:30 – 16:30</div>
+        <div class="desc">Nội dung: Thao tác chiến đấu cá nhân và tổ</div>
+    </div>
+    
+    <div class="card purple">
+        <div class="date">Thứ Tư — 02/12/2026</div>
+        <div class="title">Chiều: Học chính trị</div>
+        <div class="time">⏰ 14:00 – 16:30</div>
+        <div class="desc">Nghiên cứu Nghị quyết Trung ương; phân tích tình hình trong nước - quốc tế</div>
+    </div>
+    
+    <div class="card green">
+        <div class="date">Thứ Năm — 03/12/2026</div>
+        <div class="title">Sáng: Huấn luyện chuyên môn nghiệp vụ</div>
+        <div class="time">⏰ 07:30 – 11:00</div>
+        <div class="desc">Chiều: Tự học, rèn luyện thể lực theo kế hoạch cá nhân</div>
+    </div>
+    
+    <div class="card red">
+        <div class="date">Thứ Sáu — 04/12/2026</div>
+        <div class="title">Sáng: Kiểm tra & Tổng kết tuần</div>
+        <div class="time">⏰ 07:30 – 11:00</div>
+        <div class="desc">Chiều: Chế độ nội bộ, chuẩn bị nghỉ cuối tuần</div>
+    </div>
+    
+    <div class="card amber">
+        <div class="date">Thứ Bảy & Chủ Nhật — 05–06/12</div>
+        <div class="title">Nghỉ cuối tuần</div>
+        <div class="desc">Duy trì trực cơ quan, trực bảo vệ theo lịch phân công</div>
+    </div>
+</div>
+
+<div id="thang" class="page">
+    <div class="month-title">📆 LỊCH THÁNG 12/2026</div>
+    
+    <div class="legend">
+        <span><span class="dot" style="background:#d32f2f"></span> Quan trọng</span>
+        <span><span class="dot" style="background:#2e7d32"></span> Huấn luyện</span>
+        <span><span class="dot" style="background:#7b1fa2"></span> Học chính trị</span>
+        <span><span class="dot" style="background:#f57c00"></span> Nghỉ</span>
+    </div>
+    
+    <div class="card green">
+        <div class="date">01–05/12/2026</div>
+        <div class="title">Tuần 1: Thực hiện kế hoạch huấn luyện tháng</div>
+    </div>
+    
+    <div class="card purple">
+        <div class="date">09/12/2026</div>
+        <div class="title">Hội nghị học chính trị toàn đơn vị</div>
+    </div>
+    
+    <div class="card green">
+        <div class="date">15–19/12/2026</div>
+        <div class="title">Tuần 3: Tập trung huấn luyện chuyên môn nghiệp vụ</div>
+    </div>
+    
+    <div class="card red">
+        <div class="date">22–26/12/2026</div>
+        <div class="title">Tổng kết công tác tháng & Bình xét thi đua</div>
+    </div>
+    
+    <div class="card amber">
+        <div class="date">31/12/2026</div>
+        <div class="title">Chào năm mới — Trực theo lịch phân công</div>
+    </div>
+</div>
+
+<div id="thongbao" class="page">
+    <div class="month-title">🔔 THÔNG BÁO & QUY ĐỊNH</div>
+    
+    <div class="card blue">
+        <div class="title">✅ Quy định chung</div>
+        <div class="desc">
+            • Thực hiện nghiêm lịch công tác đã phát hành<br>
+            • Nếu điều chỉnh phải thông báo trước cho toàn đơn vị<br>
+            • Đúng giờ, đúng địa điểm, chuẩn bị đầy đủ nội dung
+        </div>
+    </div>
+    
+    <div class="card blue">
+        <div class="title">📞 Thông tin liên hệ</div>
+        <div class="desc">
+            • Chỉ huy trực: _______________<br>
+            • Bộ phận văn thư: _______________<br>
+            • Cập nhật lịch: Mỗi thứ Hai hàng tuần
+        </div>
+    </div>
+    
+    <div class="card blue">
+        <div class="title">💡 Cách sử dụng trên điện thoại</div>
+        <div class="desc">
+            • Mở trong trình duyệt → Chọn "Thêm vào màn hình chính"<br>
+            • Từ lần sau chỉ cần nhấn biểu tượng trên màn hình là mở được<br>
+            • Khi có bản mới, chỉ cần mở lại là xem bản cập nhật
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    Phiên bản 1.0 — Cập nhật: 26/11/2026
+</div>
+
+<script>
+// Chuyển trang
+function switchTab(name) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(name).classList.add('active');
+    event.target.classList.add('active');
+    window.scrollTo(0,0);
+}
+
+// Hướng dẫn lưu vào màn hình chính
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    document.getElementById('installBanner').classList.add('show');
+});
+
+function addToHomeScreen() {
+    if (deferredPrompt) {
+        deferredPrompt.prompt();
+        deferredPrompt.userChoice.then(choice => {
+            deferredPrompt = null;
+        });
+    } else {
+        alert('📱 Trên điện thoại: Nhấn nút Menu (⋮) → Thêm vào/ Cài đặt ứng dụng');
+    }
+}
+</script>
+
+</body>
+</html>
+```
